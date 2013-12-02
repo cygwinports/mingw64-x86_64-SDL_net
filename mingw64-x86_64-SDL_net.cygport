@@ -1,0 +1,26 @@
+CROSS_HOST="x86_64-w64-mingw32"
+inherit cross
+
+NAME="mingw64-x86_64-SDL_net"
+VERSION=1.2.8
+RELEASE=1
+CATEGORY="Devel"
+SUMMARY="SDL network library for Win64 toolchain"
+DESCRIPTION="This is the Simple DirectMedia Layer, a general API that provides
+low level access to audio, keyboard, mouse, joystick, 3D hardware via OpenGL,
+and 2D framebuffer across multiple platforms."
+HOMEPAGE="http://www.libsdl.org/projects/SDL_net/"
+SRC_URI="${HOMEPAGE}/release/SDL_net-${VERSION}.tar.gz"
+SRC_DIR="SDL_net-${VERSION}"
+PATCH_URI="1.2.8-windres.patch"
+
+# The included libtool macros have been hacked for the *-*-mingw* target to
+# produce SDL_net.dll (instead of the usual libSDL_net-1-2-0.dll) and to set
+# deplibs_check_method=pass_all (to allow linking with -ldxguid, which is
+# static).  Therefore, we must use these macros and the corresponding ltmain.sh.
+NO_LIBTOOLIZE=1
+ACLOCAL_FLAGS="-I acinclude"
+
+CYGCONF_ARGS="--disable-gui"
+
+KEEP_LA_FILES="none"
